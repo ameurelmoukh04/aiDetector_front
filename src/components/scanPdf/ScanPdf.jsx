@@ -24,7 +24,8 @@ const ScanPdf = () => {
         setScore(null)
         const config = {
             headers: {
-                "Content-Type": "multipart/form-data"
+                "Content-Type": "multipart/form-data",
+                "Authorization" : `Bearer ${token}`
             }
         }
         const response = await axios.post('http://127.0.0.1:8000/api/scan', formData, config)
@@ -63,7 +64,7 @@ if(!token){
                         <input type="file" className={`w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg hover:bg-indigo-700 transition duration-300 `} {...register('pdf')} />
                     </div>
 
-                    <input type="submit" value='Check' className={`w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg hover:bg-indigo-700 transition duration-300`} />
+                    <input type="submit" value='Check' className={`w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg hover:bg-indigo-700 transition duration-300 cursor-pointer`} />
                 </form>
 
                 {score !== null && (
