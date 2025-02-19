@@ -28,7 +28,6 @@ const Register = () => {
                 { name, email, password },
                 config);
 
-            localStorage.setItem('token', response.data.token);
             if (response.status === 201) {
                 window.location.href = '/login'
             }
