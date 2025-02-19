@@ -44,7 +44,7 @@ const CheckText = () => {
                     <div>
                         <label className='block text-lg font-medium text-gray-700'>text : </label>
                         <textarea name="content" id="content" cols="40" rows="10" {...register('content')} className='mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500'></textarea>
-                        <p>{characterNumber}</p>
+                        <p>{characterNumber} Characters</p>
                     </div>
 
                     

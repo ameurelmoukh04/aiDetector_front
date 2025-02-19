@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import Navbar from '../commun/navbar/Navbar';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const backendURL = 'http://127.0.0.1:8000/api'
 const Login = () => {
@@ -60,6 +61,10 @@ const Login = () => {
                         <button type='submit' className='button'>
                             Login
                         </button>
+                        <div>
+                        <Link to='/login'>Don't have account? Register</Link>
+
+                        </div>
                     </form>
                 </div>
             </div>
