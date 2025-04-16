@@ -9,6 +9,7 @@ import CheckText from './components/checkText/CheckText'
 import AdminDashboard from './components/AdminDashboard'
 import AdminRoute from './components/AdminrRoute'
 import ScanPdf from './components/scanPdf/ScanPdf'
+import Split from './components/checkText/Split'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/scanpdf' element={<ScanPdf/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
+        <Route path='/split' element={<Split/>}/>
         <Route path='/admin' element={<AdminRoute><AdminDashboard /></AdminRoute>}/>
       </Routes>
     

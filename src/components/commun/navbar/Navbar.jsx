@@ -11,6 +11,7 @@ const Navbar = () => {
     const backendURL = 'http://127.0.0.1:8000/api'
         try {
             const token = localStorage.getItem("token");
+            console.log(token)
             const response = await axios.post(`${backendURL}/logout`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -19,7 +20,6 @@ const Navbar = () => {
                   }
             });
             localStorage.removeItem("token");
-            localStorage.removeItem("roles");
             console.log(response.data.message);
             window.location.href = "/login";
         } catch (error) { console.log(error.message) }

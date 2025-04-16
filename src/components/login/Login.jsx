@@ -2,11 +2,12 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import Navbar from '../commun/navbar/Navbar';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const backendURL = 'http://127.0.0.1:8000/api'
 const Login = () => {
     const { register, handleSubmit } = useForm();
+    const navigate = useNavigate();
     const submitForm = async (data) => {
         const {email,password} = data;
         try {
@@ -22,11 +23,10 @@ const Login = () => {
 
 
             if (response.status === 200) {
-                const token = localStorage.setItem('token', response.data.token);
-                const role = localStorage.setItem('roles', JSON.stringify(response.data.roles));
-                console.log(response.data.user);
+                const token = localStorage.setItem('token', response.data.Authorization.token);
+                console.log(response.data.Authorization.token);
                 alert('logged in')
-                window.location.href = '/'
+                navigate('/')
             }
         } catch (error) {
             console.log(error.message)

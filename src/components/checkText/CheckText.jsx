@@ -9,10 +9,11 @@ const CheckText = () => {
     const { register, handleSubmit, watch } = useForm();
 
     const [score, setScore] = useState(null);
+    const [history, setHistory] = useState([]);
 
     const [characterNumber, setCharacterNumber] = useState(0);
     const contentValue = watch("content", "");
-
+    const token = localStorage.getItem('token') || null;
 
 
 
@@ -20,16 +21,36 @@ const CheckText = () => {
         setScore(null)
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${token}`
             }
         }
         const response = await axios.post('http://127.0.0.1:8000/api/check', { content: data.content }, config)
         if (response.status == 200) {
-            console.log(response.data.data)
+            console.log(token);
             setScore(response.data.data)
+            
         }
 
     }
+
+
+
+    useEffect(()=>{
+        const URL= 'http://127.0.0.1:8000/api/history';
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${token}`
+            }
+        }
+        const fetchHistory= async()=>{
+            const response = await axios.get(URL,config)
+            setHistory(response.data.data);
+            console.log(response.data.data);
+        }
+        fetchHistory()
+    },[])
 
     useEffect(() => {
         setCharacterNumber(contentValue.length);
@@ -38,8 +59,13 @@ const CheckText = () => {
     return (
         <>
             <Navbar />
-            <h1 className='text-4xl font-bold text-gray-900 text-center pt-5'>Check any text if it contains Ai!!</h1>
+            <div className='flex h-screen'>
+
+            <div className='w-1/4 bg-gray-100 p-4'>
+                <h2>History</h2>
+            </div>
             <div className='max-w-lg mx-auto p-6 bg-white shadow-lg rounded-2xl '>
+            <h1 className='text-4xl font-bold text-gray-900 text-center pt-5'>Check any text if it contains Ai!!</h1>
                 <form onSubmit={handleSubmit(onSubmitFunction)} className='space-y-4' encType='multipart/form-data'>
                     <div>
                         <label className='block text-lg font-medium text-gray-700'>text : </label>
@@ -70,6 +96,7 @@ const CheckText = () => {
 
 
                 )}
+            </div>
             </div>
         </>
     )
