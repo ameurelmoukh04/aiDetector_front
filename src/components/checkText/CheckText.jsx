@@ -53,7 +53,7 @@ const CheckText = () => {
 
 
     useEffect(() => {
-        const URL = 'http://127.0.0.1:8000/api/history';
+        const URL = 'http://127.0.0.1:8000/api/history/text';
         const config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ const CheckText = () => {
                                 {item.content?.slice(0, 50) || 'No preview available...'}
                             </h3>
                             <p className="text-xs text-gray-500 mt-1 truncate">
-                                History {item.result}
+                            Ai written Rate : {item.result}%
                             </p>
                         </div>
                     ))}

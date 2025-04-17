@@ -12,6 +12,8 @@ const ScanPdf = () => {
     const [content, setContent] = useState('');
     const [file, setFile] = useState(null);
     const [dragActive, setDragActive] = useState(false);
+    const [history,setHistory] = useState([])
+
     const token = localStorage.getItem('token');
 
     const [characterNumber, setCharacterNumber] = useState(0);
@@ -32,13 +34,28 @@ const ScanPdf = () => {
         }
         const response = await axios.post('http://127.0.0.1:8000/api/scan', formData, config)
         if (response.status == 200) {
-            console.log(response.data.data)
+            console.log(response.data)
             setScore(response.data.data)
             setContent(response.data.content)
             setCharacterNumber(content.length);
         }
 
     }
+
+    useEffect(() => {
+        const URL = 'http://127.0.0.1:8000/api/history/pdf';
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }
+        const fetchHistory = async () => {
+            const response = await axios.get(URL, config)
+            setHistory(response.data.data);
+        }
+        fetchHistory()
+    }, [])
 
 
     const handleDrag = (e) => {
@@ -77,8 +94,22 @@ const ScanPdf = () => {
 
             <Navbar />
             <div className='flex h-screen'>
-                <div className='w-1/4 bg-gray-100 p-4'>
-                    <h2 className='text-center'>History</h2>
+            <div className="w-full max-w-xs bg-white border-r border-gray-200 h-screen overflow-y-auto">
+                    <h2 className="text-lg font-semibold p-4 border-b">History</h2>
+                    {history.map((item, index) => (
+                        <div
+                            key={index}
+                            className="p-4 cursor-pointer hover:bg-gray-100 border-b border-gray-200 transition-all"
+                            onClick={()=>showHistoryItem(item.id)}
+                        >
+                            <h3 className="text-sm text-gray-800 font-medium truncate">
+                                {item.filename?.slice(0, 50) || 'No preview available...'}
+                            </h3>
+                            <p className="text-xs text-gray-500 mt-1 truncate">
+                                Ai written Rate : {item.result}%
+                            </p>
+                        </div>
+                    ))}
                 </div>
 
                 <div className='max-w-lg mx-auto p-6 bg-white shadow-lg rounded-2xl '>
