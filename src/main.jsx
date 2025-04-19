@@ -10,6 +10,7 @@ import AdminDashboard from './components/AdminDashboard'
 import AdminRoute from './components/AdminrRoute'
 import ScanPdf from './components/scanPdf/ScanPdf'
 import Split from './components/checkText/Split'
+import GoogleAuthCallback from './components/login/GoogleAuthCallback'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/register' element={<Register/>}/>
         <Route path='/split' element={<Split/>}/>
         <Route path='/admin' element={<AdminRoute><AdminDashboard /></AdminRoute>}/>
+        <Route path="/auth/google/callback" element={<GoogleAuthCallback />} />
       </Routes>
     
     </BrowserRouter>

@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Navbar from '../commun/navbar/Navbar';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const backendURL = 'http://127.0.0.1:8000/api'
 const Login = () => {
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
+    const [loginUrl,setLoginUrl] = useState(null);
+    const backendURL = 'http://127.0.0.1:8000/api'
+
+    const handleGoogleLogin = async () =>{
+        const res = await axios.get('http://localhost:8000/api/auth');
+        window.location.href = res.data.url;
+    }
+
     const submitForm = async (data) => {
         const {email,password} = data;
         try {
@@ -20,24 +28,28 @@ const Login = () => {
             const response = await axios.post(`${backendURL}/login`,
                 { email, password },
                 config);
-
-
-            if (response.status === 200) {
-                const token = localStorage.setItem('token', response.data.Authorization.token);
-                console.log(response.data.Authorization.token);
-                alert('logged in')
-                navigate('/')
+                
+                
+                if (response.status === 200) {
+                    const token = localStorage.setItem('token', response.data.Authorization.token);
+                    console.log(response.data.Authorization.token);
+                    alert('logged in')
+                    navigate('/')
+                }
+            } catch (error) {
+                console.log(error.message)
             }
-        } catch (error) {
-            console.log(error.message)
         }
-    }
     return (
         <>
             <Navbar />
             <div className='flex justify-center items-center min-h-screen bg-gray-100'>
                 <div className="bg-white p-6 rounded-lg shadow-lg w-96">
                     <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">Login</h2>
+
+                    <a className='cursor-pointer text-center' onClick={()=>handleGoogleLogin()}>Login in With Google</a>
+
+
                     <form onSubmit={handleSubmit(submitForm)} className='space-y-4'>
                         <div>
                             <label htmlFor='email' className='block text-gray-700'>Email :</label>
