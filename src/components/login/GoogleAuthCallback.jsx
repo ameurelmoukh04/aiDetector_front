@@ -20,7 +20,7 @@ const GoogleAuthCallback = () => {
                 console.log(res.data.Authorization.token)
                 localStorage.setItem('token', res.data.Authorization.token);
                 navigate('/');
-              })
+              }) 
               .catch(err => console.error(err));
           }
         }

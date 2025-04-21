@@ -11,6 +11,8 @@ import AdminRoute from './components/AdminrRoute'
 import ScanPdf from './components/scanPdf/ScanPdf'
 import Split from './components/checkText/Split'
 import GoogleAuthCallback from './components/login/GoogleAuthCallback'
+import Pricing from './components/Pricing'
+import ThankYouPage from './components/ThankYouPage'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -24,6 +26,8 @@ createRoot(document.getElementById('root')).render(
         <Route path='/split' element={<Split/>}/>
         <Route path='/admin' element={<AdminRoute><AdminDashboard /></AdminRoute>}/>
         <Route path="/auth/google/callback" element={<GoogleAuthCallback />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/success" element={<ThankYouPage />} />
       </Routes>
     
     </BrowserRouter>
