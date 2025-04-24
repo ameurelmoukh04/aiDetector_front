@@ -77,7 +77,7 @@ const Login = () => {
                             Login
                         </button>
                         <p>OR</p>
-                        <button className='flex items-center w-80 justify-center gap-2 bg-sky-500 text-white px-4 py-2 rounded hover:bg-sky-600' onClick={()=>handleGoogleLogin()}><img src={GoogleImage} className='w-10 h-10' /> Login With Google</button>
+                        <button className='flex items-center w-80 justify-center gap-2 bg-sky-500 text-white px-4 py-2 rounded hover:bg-sky-600 cursor-pointer' onClick={()=>handleGoogleLogin()}><img src={GoogleImage} className='w-10 h-10' /> Login With Google</button>
                         <div>
                         <Link to='/register' >Don't have account? <span className='underline'>Register</span></Link>
 

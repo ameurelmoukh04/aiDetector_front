@@ -17,11 +17,9 @@ const Pricing = () => {
                 "Authorization": `Bearer ${token}`,
             }
         }
-        const stripe = await loadStripe('pk_test_51RFiizFY2rarmKfjn8lyL7VEyT7tW3UjaCHvJPiYCLhgeKDoi9GViBJndBy5HHfvrZRxQcmYUGYctfvbCDPLrhMP000wHhi894');
 
         const response =await axios.get(url,config);
-        const sessionId = response.data.sessionId;
-        await stripe.redirectToCheckout({sessionId})
+        window.location.href = response.data.url;
         }
   return (
 <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
