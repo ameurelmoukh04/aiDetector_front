@@ -13,6 +13,8 @@ import Split from './components/checkText/Split'
 import GoogleAuthCallback from './components/login/GoogleAuthCallback'
 import Pricing from './components/Pricing'
 import ThankYouPage from './components/ThankYouPage'
+import Plan from './components/Plan'
+import GenerateImage from './components/GenerateImage'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -28,6 +30,8 @@ createRoot(document.getElementById('root')).render(
         <Route path="/auth/google/callback" element={<GoogleAuthCallback />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/success" element={<ThankYouPage />} />
+        <Route path="/plan" element={<Plan />} />
+        <Route path="/image/generate" element={<GenerateImage />} />
       </Routes>
     
     </BrowserRouter>

@@ -85,7 +85,11 @@ const ScanPdf = () => {
         return (
             <>
                 <Navbar />
+                <div>
                 <h1 className='text-center'>Just Authenticated Users can Scan Pdf's</h1>
+                <Link className='text-center' to='/login'>Login</Link>
+
+                </div>
             </>
         )
     }

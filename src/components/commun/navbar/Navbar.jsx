@@ -35,6 +35,7 @@ const Navbar = () => {
       <div className='linkContainer'>
         <Link to={'/check'} >Check Text</Link>
         <button><Link to={'/scanPDF'}>scanPDF</Link></button>
+        <button><Link to={'/image/generate'}>generate Image</Link></button>
         {token ?
         <button className='cursor-pointer' onClick={()=> logout()} >Log out</button> : <Link to={'/login'}>Login|Register</Link>
       }

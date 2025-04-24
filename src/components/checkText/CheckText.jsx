@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import Navbar from '../commun/navbar/Navbar'
 import HistoryItem from './HistoryItem';
+import { MdDeleteOutline } from "react-icons/md";
+import { MdOpenInNew } from "react-icons/md";
 
 const CheckText = () => {
     const { register, handleSubmit, watch } = useForm();
@@ -34,18 +36,18 @@ const CheckText = () => {
         }
 
     }
-    const showHistoryItem=(id)=>{
-        axios.get('http://127.0.0.1:8000/api/history/show',{
-            params:{id:id},
+    const showHistoryItem = (id) => {
+        axios.get('http://127.0.0.1:8000/api/history/show', {
+            params: { id: id },
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         })
-        .then((response)=>console.log(response.data.data))
-        .catch((error)=>console.log(error))
-        return(
-            <HistoryItem item={response.data.data}/>
+            .then((response) => console.log(response.data.data))
+            .catch((error) => console.log(error))
+        return (
+            <HistoryItem item={response.data.data} />
         )
 
     }
@@ -82,14 +84,16 @@ const CheckText = () => {
                         <div
                             key={index}
                             className="p-4 cursor-pointer hover:bg-gray-100 border-b border-gray-200 transition-all"
-                            onClick={()=>showHistoryItem(item.id)}
+                            onClick={() => showHistoryItem(item.id)}
                         >
                             <h3 className="text-sm text-gray-800 font-medium truncate">
                                 {item.content?.slice(0, 50) || 'No preview available...'}
                             </h3>
                             <p className="text-xs text-gray-500 mt-1 truncate">
-                            Ai written Rate : {item.result}%
+                                Ai written Rate : {item.result}%
                             </p>
+                            <button className='cursor-pointer' onClick={() => deleteItem(item.id)}><MdDeleteOutline /></button>
+                            <button className='cursor-pointer' onClick={() => viewImage(item.id)}><MdOpenInNew /></button>
                         </div>
                     ))}
                 </div>
