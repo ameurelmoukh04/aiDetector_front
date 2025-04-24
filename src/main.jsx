@@ -32,6 +32,9 @@ createRoot(document.getElementById('root')).render(
         <Route path="/success" element={<ThankYouPage />} />
         <Route path="/plan" element={<Plan />} />
         <Route path="/image/generate" element={<GenerateImage />} />
+
+        {/* <Route path="/item/key" element={<GenerateImage />} /> */}
+
       </Routes>
     
     </BrowserRouter>

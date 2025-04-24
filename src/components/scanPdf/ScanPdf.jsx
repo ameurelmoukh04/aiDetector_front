@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import Navbar from '../commun/navbar/Navbar'
 import { Link } from 'react-router-dom';
+import { MdDeleteOutline } from "react-icons/md";
+import { MdOpenInNew } from "react-icons/md";
 
 const ScanPdf = () => {
     const { register, handleSubmit, watch } = useForm();
@@ -93,6 +95,25 @@ const ScanPdf = () => {
             </>
         )
     }
+    const deleteItem = async(id)=>{
+        const BACKEND = 'http://localhost:8000/api/history/delete';
+        console.log(id)
+        const data ={
+            history_id:id,
+            history_type:"PDF"
+        };
+        const config = {
+            headers:{
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${token}`
+            },
+            data:data
+        }
+       const response = await axios.delete(BACKEND,config);
+       console.log(response.data);
+
+    }
     return (
         <>
 
@@ -104,7 +125,6 @@ const ScanPdf = () => {
                         <div
                             key={index}
                             className="p-4 cursor-pointer hover:bg-gray-100 border-b border-gray-200 transition-all"
-                            onClick={()=>showHistoryItem(item.id)}
                         >
                             <h3 className="text-sm text-gray-800 font-medium truncate">
                                 {item.filename?.slice(0, 50) || 'No preview available...'}
@@ -112,6 +132,8 @@ const ScanPdf = () => {
                             <p className="text-xs text-gray-500 mt-1 truncate">
                                 Ai written Rate : {item.result}%
                             </p>
+                            <button className='cursor-pointer' onClick={() => deleteItem(item.id)}><MdDeleteOutline /></button>
+                                                        <button className='cursor-pointer' onClick={() => viewImage(item.id)}><MdOpenInNew /></button>
                         </div>
                     ))}
                 </div>
