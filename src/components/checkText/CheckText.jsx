@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useMemo, useReducer } from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react'
 import { useForm } from 'react-hook-form';
@@ -95,8 +95,20 @@ const CheckText = () => {
     }
 
     const viewItem=(item) =>{
+        const oldValue = selectedItem;
         setSelectedItem(item);
+        if(selectedItem !==oldValue){
+            console.log(
+                'the same'
+            )
+        }
+        console.log('item changed')
+    //     return memorised = useMemo(
+    //         ()=> {
+    //         <HistoryItem item={item} />
+    // },[item])
     }
+
     return (
         <>
             <Navbar />
