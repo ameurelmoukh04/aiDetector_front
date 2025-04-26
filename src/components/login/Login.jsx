@@ -73,7 +73,7 @@ const Login = () => {
                                 required
                             />
                         </div>
-                        <button type='submit' className='w-80 p-2 border border-gray-200 text-center rounded-xl'>
+                        <button type='submit' className='w-80 p-2 border border-gray-200 text-center rounded-xl cursor-pointer'>
                             Login
                         </button>
                         <p>OR</p>

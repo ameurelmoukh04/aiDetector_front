@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useMemo, useReducer } from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react'
 import { useForm } from 'react-hook-form';
@@ -9,14 +9,15 @@ import { MdDeleteOutline } from "react-icons/md";
 import { MdOpenInNew } from "react-icons/md";
 
 const CheckText = () => {
+    const token = localStorage.getItem('token') || null;
     const { register, handleSubmit, watch } = useForm();
 
     const [score, setScore] = useState(null);
     const [history, setHistory] = useState([]);
+    const [selectedItem,setSelectedItem] = useState(null)
 
     const [characterNumber, setCharacterNumber] = useState(0);
     const contentValue = watch("content", "");
-    const token = localStorage.getItem('token') || null;
 
 
 
@@ -73,6 +74,41 @@ const CheckText = () => {
         setCharacterNumber(contentValue.length);
     }, [contentValue]);
 
+    const deleteItem = async(id)=>{
+        const BACKEND = 'http://localhost:8000/api/history/delete';
+        console.log(id)
+        const data ={
+            history_id:id,
+            history_type:"text"
+        };
+        const config = {
+            headers:{
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${token}`
+            },
+            data:data
+        }
+       const response = await axios.delete(BACKEND,config);
+       console.log(response.data);
+
+    }
+
+    const viewItem=(item) =>{
+        const oldValue = selectedItem;
+        setSelectedItem(item);
+        if(selectedItem !==oldValue){
+            console.log(
+                'the same'
+            )
+        }
+        console.log('item changed')
+    //     return memorised = useMemo(
+    //         ()=> {
+    //         <HistoryItem item={item} />
+    // },[item])
+    }
+
     return (
         <>
             <Navbar />
@@ -80,11 +116,17 @@ const CheckText = () => {
 
                 <div className="w-full max-w-xs bg-white border-r border-gray-200 h-screen overflow-y-auto">
                     <h2 className="text-lg font-semibold p-4 border-b">History</h2>
+                    <div onClick={()=>setSelectedItem(null)}
+                            className="p-4 cursor-pointer hover:bg-gray-100 border-b border-gray-200 transition-all"
+                        >
+                            <h3 className="text-sm text-gray-800 font-medium truncate">
+                                Check New Text
+                            </h3>
+                        </div>
                     {history.map((item, index) => (
                         <div
                             key={index}
                             className="p-4 cursor-pointer hover:bg-gray-100 border-b border-gray-200 transition-all"
-                            onClick={() => showHistoryItem(item.id)}
                         >
                             <h3 className="text-sm text-gray-800 font-medium truncate">
                                 {item.content?.slice(0, 50) || 'No preview available...'}
@@ -93,10 +135,13 @@ const CheckText = () => {
                                 Ai written Rate : {item.result}%
                             </p>
                             <button className='cursor-pointer' onClick={() => deleteItem(item.id)}><MdDeleteOutline /></button>
-                            <button className='cursor-pointer' onClick={() => viewImage(item.id)}><MdOpenInNew /></button>
+                            <button className='cursor-pointer' onClick={() => viewItem(item)}><MdOpenInNew /></button>
                         </div>
                     ))}
                 </div>
+                {selectedItem
+                ? <HistoryItem item={selectedItem}/>
+                :
                 <div className='max-w-lg mx-auto p-6 bg-white shadow-lg rounded-2xl '>
                     <h1 className='text-4xl font-bold text-gray-900 text-center pt-5'>Check any text if it contains Ai!!</h1>
                     <form onSubmit={handleSubmit(onSubmitFunction)} className='space-y-4' encType='multipart/form-data'>
@@ -130,6 +175,7 @@ const CheckText = () => {
 
                     )}
                 </div>
+                }
             </div>
         </>
     )
